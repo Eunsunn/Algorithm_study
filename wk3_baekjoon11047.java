@@ -1,19 +1,22 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-
-	//문제 : https://www.acmicpc.net/problem/11047
 	public static int kinds;
 	public static int amount;
 	public static int[] arr;
-	public static Scanner scan = new Scanner(System.in);
+	public static BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+	public static StringTokenizer st;
 	
-	public static void inputData() {
-		kinds = scan.nextInt();
-		amount = scan.nextInt();
+	public static void inputData() throws IOException {
+		st = new StringTokenizer(bf.readLine());
+		kinds = Integer.parseInt(st.nextToken());
+		amount = Integer.parseInt(st.nextToken());
 		arr = new int[kinds];
 		for(int i=0; i<kinds; i++)
-			arr[i] = scan.nextInt();
+			arr[i] = Integer.parseInt(bf.readLine());
 	}
 	
 	public static void calculate() {
@@ -30,10 +33,9 @@ public class Main {
 		}
 		System.out.println(count);
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		inputData();
 		calculate();
 	}
-
 }
 
