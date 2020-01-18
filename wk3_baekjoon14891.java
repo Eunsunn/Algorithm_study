@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class Main {
+	//문제 : https://www.acmicpc.net/problem/14891
 	public static LinkedList<Integer> g1;
 	public static LinkedList<Integer> g2;
 	public static LinkedList<Integer> g3;

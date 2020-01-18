@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+	//문제 : https://www.acmicpc.net/problem/11047
 	public static int kinds;
 	public static int amount;
 	public static int[] arr;
