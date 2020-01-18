@@ -1,37 +1,41 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-	//문제 : https://www.acmicpc.net/problem/14891
 	public static LinkedList<Integer> g1;
 	public static LinkedList<Integer> g2;
 	public static LinkedList<Integer> g3;
 	public static LinkedList<Integer> g4;
-	public static int rotate; //회전 횟수
-	public static int[][] rotateInfo; //회전 정보 : 톱니바퀴 숫자, 방향
-	public static boolean[] isRotate; //한 회전마다 톱니바퀴들이 회전할지 저장
-	public static Scanner scan = new Scanner(System.in);
+	public static int rotate; 
+	public static int[][] rotateInfo;
+	public static boolean[] isRotate; 
+	public static BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+	public static StringTokenizer st;
 	
-	public static void inputData() {
+	public static void inputData() throws NumberFormatException, IOException {
 		g1 = inputGear();
 		g2 = inputGear();
 		g3 = inputGear();
 		g4 = inputGear();
-		rotate = scan.nextInt();
+		rotate = Integer.parseInt(bf.readLine());
 		rotateInfo = new int[rotate][2];
 		for(int i=0; i<rotate; i++)
+		{
+			st = new StringTokenizer(bf.readLine());
 			for(int j=0; j<2; j++)
-				rotateInfo[i][j] = scan.nextInt();
+				rotateInfo[i][j] = Integer.parseInt(st.nextToken());
+		}
 	}
-	//톱니 하나 얻기
-	public static LinkedList<Integer> inputGear(){
+	public static LinkedList<Integer> inputGear() throws IOException{
 		LinkedList<Integer> ls = new LinkedList<>();
-		String[] line = scan.nextLine().split("");
+		String line = bf.readLine();
 		for(int i=0; i<8; i++)
-			ls.add(Integer.parseInt(line[i]));
+			ls.add(line.charAt(i) - '0');
 		return ls;
 	}
-	//회전할 톱니 숫자로 톱니 객체 얻기
 	public static LinkedList<Integer> getGear(int gearNum){
 		LinkedList<Integer> ls;
 		switch(gearNum) {
@@ -52,22 +56,20 @@ public class Main {
 		}
 		return ls;
 	}
-	//톱니 하나 회전시키는 함수
 	public static void rotateAGear(int gearNum, int direction) {
-		LinkedList<Integer> ls = getGear(gearNum); //해당 톱니 객체를 얻어
+		LinkedList<Integer> ls = getGear(gearNum);
 		switch(direction) {
-		case 1: //시계방향 회전
+		case 1:
 			int last = ls.get(ls.size()-1);
 			ls.remove(ls.size()-1);
 			ls.add(0, last);
 			break;
-		case -1: //반시계방향 회전
+		case -1: 
 			ls.add(ls.get(0));
 			ls.remove(0);
 			break;
 		}	
 	}
-	//전체 톱니바퀴들의 회전 방향 얻기
 	public static int[] getDirection(int gear, int direction) {
 		int[] dir = {1, -1, 1, -1};
 		int[] reverse = {-1, 1, -1, 1};
@@ -76,34 +78,26 @@ public class Main {
 		else
 			return reverse;
 	}
-	//톱니들 회전여부 : 왼쪽, 오른쪽으로 나눠서 재귀적 탐색
 	public static void checkRotate(int gear) {
-		for(int i=gear; i>1; i--) {
-			if(isRotate[i-1]==false)
-				break;
-			checkLeft(i);
-		}
-		for(int i=gear; i<4; i++) {
-			if(isRotate[i-1]==false)
-				break;
-			checkRight(i);
-		}
+		checkLeft(gear);
+		checkRight(gear);
 	}
-	//왼쪽 톱니 회전여부 체크
 	public static void checkLeft(int gear) {
-		if(gear>1) {
-			if(getGear(gear-1).get(2)!=getGear(gear).get(6))
-				isRotate[gear-2] = true;
+		if (gear<2)
+			return;
+		if(getGear(gear-1).get(2)!=getGear(gear).get(6)) {
+			isRotate[gear-2] = true;
+			checkLeft(gear-1);
 		}
 	}
-	//오른쪽 톱니 회전여부 체크
 	public static void checkRight(int gear) {
-		if(gear<4) {
-			if(getGear(gear).get(2)!=getGear(gear+1).get(6))
-				isRotate[gear] = true;
+		if(gear>3)
+			return;
+		if(getGear(gear).get(2)!=getGear(gear+1).get(6)) {
+			isRotate[gear] = true;
+			checkRight(gear+1);
 		}
 	}
-	//입력받은 수만큼 톱니 회전
 	public static void rotateGears() {
 		for(int i=0; i<rotateInfo.length; i++) {
 			int gear = rotateInfo[i][0];
@@ -122,20 +116,17 @@ public class Main {
 				rotateAGear(4, dir[3]);		
 		}
 	}
-	//결과 출력
 	public static void printResult() {
 		int total = 0;
-		total += g1.get(0)*1;
-		total += g2.get(0)*2;
-		total += g3.get(0)*4;
-		total += g4.get(0)*8;
+		for(int i=0; i<4; i++) {
+			total += getGear(i+1).get(0)*(Math.pow(2, i));
+		}
 		System.out.println(total);
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		inputData();
 		rotateGears();
 		printResult();
 	}
 
 }
-
