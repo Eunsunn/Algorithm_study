@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Main {
-	//문제: https://www.acmicpc.net/problem/15685 (백준 드래곤 커브 15685)
+	//문제 : https://www.acmicpc.net/problem/15685 (백준 드래곤 커브 15685)
 	public static int[] xdir = {1, 0, -1, 0};
 	public static int[] ydir = {0, -1, 0, 1};
 	public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
