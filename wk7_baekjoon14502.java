@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class Main {
-	//문제: https://www.acmicpc.net/problem/14502 (백준 연구소)
+	//문제 : https://www.acmicpc.net/problem/14502 (백준 연구소)
 	public static int row, col;
 	public static int[][] map;
 	public static int max = 0;
