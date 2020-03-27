@@ -6,6 +6,9 @@ import java.util.StringTokenizer;
 
 public class Main {
 
+	//문제: https://www.acmicpc.net/problem/14888 ( 백준 연산자 끼워넣기 )
+	//백준 14888
+	
 	public static int MAX = -(int) Math.pow(10, 10);
 	public static int MIN = (int) Math.pow(10,10);
 	public static int n;
